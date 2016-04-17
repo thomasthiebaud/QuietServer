@@ -62,7 +62,7 @@ describe('Report a phone as an authenticated user', function() {
     done();
   });
 
-  it('should create a phone on /phone PUT if it does not exist', function(done) {
+  it('should report a phone on /phone PUT', function(done) {
     const idToken = tokens.generateIdToken(true);
 
     chai.request(app)
@@ -83,6 +83,30 @@ describe('Report a phone as an authenticated user', function() {
       .set('idToken', idToken)
       .end(function(err, res) {
         expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should fail to get a phone if idToken is not valid', function(done) {
+    const idToken = 'Some invalid id token';
+
+    chai.request(app)
+      .get('/api/phone/0633878103')
+      .set('idToken', idToken)
+      .end(function(err, res) {
+        expect(res).to.have.status(403);
+        done();
+      });
+  });
+
+  it('should fail to report a phone on /phone PUT', function(done) {
+    const idToken = 'Some invalid id token';
+
+    chai.request(app)
+      .put('/api/phone')
+      .send({idToken: idToken, number: '0633878103', ad: true, scam: true})
+      .end(function(err, res) {
+        expect(res).to.have.status(403);
         done();
       });
   });

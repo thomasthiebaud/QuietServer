@@ -13,6 +13,8 @@ function getMessage(_code) {
       return 'Unknown user';
     case code.E_DATABASE:
       return 'Internal server error';
+    case code.E_INCORRECT_TOKEN:
+      return 'Access denied';
     default:
       throw new Error(`Unknown status code : ${_code}`);
   }
@@ -29,6 +31,8 @@ function getHttpStatus(_code) {
       return 400;
     case code.E_DATABASE:
       return 500;
+    case code.E_INCORRECT_TOKEN:
+      return 403;
     default:
       throw new Error(`Unknown status code : ${_code}`);
   }
