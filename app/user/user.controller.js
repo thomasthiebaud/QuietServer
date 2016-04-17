@@ -16,7 +16,10 @@ function verifyGoogleIdToken(idToken) {
         });
       }
 
-      return resolve(tokenInfo);
+      return resolve({
+        code: code.S_TOKEN_VALIDATED,
+        content: tokenInfo,
+      });
     });
   });
 }
@@ -85,7 +88,7 @@ function saveGoogleUser(tokenInfo) {
 function signIn(idToken) {
   return new Promise((resolve, reject) => {
     verifyGoogleIdToken(idToken)
-      .then(tokenInfo => saveGoogleUser(tokenInfo))
+      .then(tokenInfoMessage => saveGoogleUser(tokenInfoMessage.content))
       .then(user => resolve(user))
       .catch(err => reject(err));
   });
@@ -94,7 +97,7 @@ function signIn(idToken) {
 function logIn(idToken) {
   return new Promise((resolve, reject) => {
     verifyGoogleIdToken(idToken)
-      .then(tokenInfo => checkUserExist(tokenInfo))
+      .then(tokenInfoMessage => checkUserExist(tokenInfoMessage.content))
       .then(user => resolve(user))
       .catch(err => reject(err));
   });

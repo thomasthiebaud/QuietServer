@@ -10,4 +10,5 @@ module.exports = {
   S_CREATED: 201,
   S_FOUND: 202,
   S_REPORTED: 203,
+  S_TOKEN_VALIDATED: 204,
 };

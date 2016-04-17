@@ -11,8 +11,10 @@ function getMessage(_code) {
       return 'Phone found';
     case code.E_UNKNOWN_USER:
       return 'Unknown user';
+    case code.E_DATABASE:
+      return 'Internal server error';
     default:
-      throw new Error('Unknown status code');
+      throw new Error(`Unknown status code : ${_code}`);
   }
 }
 
@@ -25,8 +27,10 @@ function getHttpStatus(_code) {
       return 200;
     case code.E_UNKNOWN_USER:
       return 400;
+    case code.E_DATABASE:
+      return 500;
     default:
-      throw new Error('Unknown status code');
+      throw new Error(`Unknown status code : ${_code}`);
   }
 }
 
