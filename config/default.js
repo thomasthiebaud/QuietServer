@@ -2,6 +2,6 @@
 
 module.exports = {
   mongo: {
-    uri: 'mongodb://192.168.99.100:32771/Quiet',
+    uri: 'mongodb://localhost:27017/Quiet',
   },
 };

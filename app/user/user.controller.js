@@ -1,5 +1,6 @@
 'use strict';
 
+const code = require('../utils/code');
 const uuid = require('node-uuid');
 const verifier = require('google-id-token-verifier');
 
@@ -11,8 +12,7 @@ function verifyGoogleIdToken(idToken) {
     verifier.verify(idToken, process.env.GOOGLE_CLIENT_ID, (err, tokenInfo) => {
       if (err) {
         return reject({
-          message: 'Incorrect token',
-          content: err,
+          code: code.E_INCORRECT_TOKEN,
         });
       }
 
@@ -21,17 +21,16 @@ function verifyGoogleIdToken(idToken) {
   });
 }
 
-function checkGoogleId(id) {
+function checkUserExist(id) {
   return new Promise((resolve, reject) => {
     User.findOne({authId: id.sub, authProvider: 'GOO'}, (err, user) => {
       if (err) {
         return reject({
-          message: 'An error occured when trying to request the database',
-          content: err,
+          code: code.E_DATABASE,
         });
       } else if (user === null) {
         return reject({
-          message: 'Unknown user',
+          code: code.E_UNKNOWN_USER,
         });
       }
 
@@ -55,12 +54,11 @@ function addUserToDatabase(tokenInfo) {
     user.save(err => {
       if (err) {
         reject({
-          message: 'An error occured when trying to save the user into the database',
-          content: err,
+          code: code.E_DATABASE,
         });
       } else {
         resolve({
-          message: 'User successfully created',
+          code: code.S_CREATED,
           content: user,
         });
       }
@@ -70,11 +68,14 @@ function addUserToDatabase(tokenInfo) {
 
 function saveGoogleUser(tokenInfo) {
   return new Promise((resolve, reject) => {
-    checkGoogleId(tokenInfo.sub)
+    checkUserExist(tokenInfo.sub)
       .then(user => resolve(user))
       .catch(err => {
-        if (err.message === 'Unknown user')
-          return addUserToDatabase(tokenInfo).then(user => resolve(user)).catch(err => reject(err));
+        if (err.code === code.E_UNKNOWN_USER) {
+          return addUserToDatabase(tokenInfo)
+            .then(user => resolve(user))
+            .catch(err => reject(err));
+        }
 
         return reject(err);
       });
@@ -93,10 +94,10 @@ function signIn(idToken) {
 function logIn(idToken) {
   return new Promise((resolve, reject) => {
     verifyGoogleIdToken(idToken)
-      .then(tokenInfo => checkGoogleId(tokenInfo))
+      .then(tokenInfo => checkUserExist(tokenInfo))
       .then(user => resolve(user))
       .catch(err => reject(err));
-  })
+  });
 }
 
 module.exports = {

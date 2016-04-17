@@ -2,9 +2,8 @@
 
 const config = require('config');
 const mongoose = require('mongoose');
-const rootDir = require('app-root-path');
 
-const log = require(`${rootDir}/app/utils/logger`).log;
+const log = require('./logger').log;
 const dbUri = config.get('mongo.uri');
 
 mongoose.connect(dbUri);

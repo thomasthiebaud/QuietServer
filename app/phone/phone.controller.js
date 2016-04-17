@@ -1,5 +1,7 @@
 'use strict';
 
+const code = require('../utils/code');
+
 const Phone = require('./phone.model');
 const Promise = require('bluebird');
 
@@ -8,12 +10,11 @@ function find(phoneNumber) {
     Phone.findOne({number: phoneNumber}, (err, phone) => {
       if (err) {
         reject({
-          message: 'An error occured when trying to request the database',
-          content: err,
+          code: code.E_DATABASE,
         });
       } else {
         resolve({
-          message: 'Phone successfully found',
+          code: code.S_FOUND,
           content: phone,
         });
       }
@@ -21,42 +22,45 @@ function find(phoneNumber) {
   });
 }
 
-function report(userId, phoneNumber, adNumber, scamNumber) {
+function report(report) {
   return new Promise((resolve, reject) => {
-    Phone.findOne({number: phoneNumber}, (err, phone) => {
+    Phone.findOne({number: report.phoneNumber}, (err, phone) => {
       let newPhone;
 
       if (err) {
         reject({
-          message: 'An error occured when trying to request the database',
-          content: err,
+          code: code.E_DATABASE,
         });
       } else {
         if (phone === null) {
           newPhone = new Phone();
-          newPhone.userId = userId;
-          newPhone.number = phoneNumber;
+          newPhone.userId = report.userId;
+          newPhone.number = report.phoneNumber;
           newPhone.ad = 0;
           newPhone.scam = 0;
           newPhone.score = 0;
         } else
           newPhone = phone;
 
-        newPhone.ad += adNumber ? 1 : 0;
-        newPhone.scam += scamNumber ? 1 : 0;
+        newPhone.ad += report.ad ? 1 : 0;
+        newPhone.scam += report.scam ? 1 : 0;
         newPhone.score = newPhone.ad + newPhone.scam;
       }
 
       newPhone.save(err => {
         if (err) {
           reject({
-            message: 'An error occured when trying to save the phone into the database',
-            content: err,
+            code: code.E_DATABASE,
           });
         } else {
           resolve({
-            message: 'Phone successfully reported',
-            content: newPhone,
+            code: code.S_REPORTED,
+            content: {
+              number: newPhone.number,
+              ad: newPhone.ad,
+              scam: newPhone.scam,
+              score: newPhone.score,
+            },
           });
         }
       });

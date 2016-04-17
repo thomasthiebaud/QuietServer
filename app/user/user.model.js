@@ -1,7 +1,7 @@
 'use strict';
 
-const rootDir = require('app-root-path');
-const mongoose = require(`${rootDir}/app/utils/database`).mongoose;
+const mongoose = require('../../app/utils/database').mongoose;
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({

@@ -1,12 +1,12 @@
 'use strict';
 
-const rootDir = require('app-root-path');
 const chai = require('chai');
+const code = require('../../../app/utils/code');
 const expect = chai.expect;
+const log = require('../../../app/utils/logger').log;
+const phoneController = require('../../../app/phone/phone.controller');
 
-const log = require(`${rootDir}/app/utils/logger`).log;
-const phoneController = require(`${rootDir}/app/phone/phone.controller`);
-const Phone = require(`${rootDir}/app/phone/phone.model`);
+const Phone = require('../../../app/phone/phone.model');
 
 describe('Phone controller test case', function() {
   beforeEach(function(done) {
@@ -43,12 +43,15 @@ describe('Phone controller test case', function() {
   });
 
   it('should create a phone given its number if it does not exist', function(done) {
-    phoneController.report('dummyToken', '9876543210', true, true).then(res => {
-      expect(res.message).to.be.equal('Phone successfully reported');
-      expect(res.content.number).to.be.equal('9876543210');
-      expect(res.content.scam).to.be.equal(1);
-      expect(res.content.ad).to.be.equal(1);
-      expect(res.content.score).to.be.equal(2);
+    phoneController.report({userId: 'dummyToken', phoneNumber: '9876543210', ad: true, scam: true}).then(res => {
+      expect(res.code).to.be.equal(code.S_REPORTED);
+
+      const content = res.content;
+
+      expect(content.number).to.be.equal('9876543210');
+      expect(content.scam).to.be.equal(1);
+      expect(content.ad).to.be.equal(1);
+      expect(content.score).to.be.equal(2);
       done();
     }).catch(err => {
       log.error(err);
@@ -56,12 +59,15 @@ describe('Phone controller test case', function() {
   });
 
   it('should update a phone given its number if it exists', function(done) {
-    phoneController.report('dummyToken', '0123456789', true, true).then(res => {
-      expect(res.message).to.be.equal('Phone successfully reported');
-      expect(res.content.number).to.be.equal('0123456789');
-      expect(res.content.scam).to.be.equal(1);
-      expect(res.content.ad).to.be.equal(2);
-      expect(res.content.score).to.be.equal(3);
+    phoneController.report({userId: 'dummyToken', phoneNumber: '0123456789', ad: true, scam: true}).then(res => {
+      expect(res.code).to.be.equal(code.S_REPORTED);
+
+      const content = res.content;
+
+      expect(content.number).to.be.equal('0123456789');
+      expect(content.scam).to.be.equal(1);
+      expect(content.ad).to.be.equal(2);
+      expect(content.score).to.be.equal(3);
       done();
     }).catch(err => {
       log.error(err);
