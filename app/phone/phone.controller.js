@@ -48,7 +48,7 @@ function savePhoneToDatabase(_report, _phone) {
 function find(_phoneNumber) {
   return new Promise((resolve, reject) => {
     Phone.findOne({number: _phoneNumber}, (err, phone) => {
-      if (err) {
+      if (!_phoneNumber || err) {
         reject({
           code: code.E_DATABASE,
         });

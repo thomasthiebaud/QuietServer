@@ -26,8 +26,8 @@ function verifyGoogleIdToken(idToken) {
 
 function checkUserExist(id) {
   return new Promise((resolve, reject) => {
-    User.findOne({authId: id.sub, authProvider: 'GOO'}, (err, user) => {
-      if (err) {
+    User.findOne({authId: id, authProvider: 'GOO'}, (err, user) => {
+      if (!id || err) {
         return reject({
           code: code.E_DATABASE,
         });
@@ -37,7 +37,10 @@ function checkUserExist(id) {
         });
       }
 
-      return resolve(user);
+      return resolve({
+        code: code.S_FOUND,
+        content: user,
+      });
     });
   });
 }
@@ -97,7 +100,7 @@ function signIn(idToken) {
 function logIn(idToken) {
   return new Promise((resolve, reject) => {
     verifyGoogleIdToken(idToken)
-      .then(tokenInfoMessage => checkUserExist(tokenInfoMessage.content))
+      .then(tokenInfoMessage => checkUserExist(tokenInfoMessage.content.sub))
       .then(user => resolve(user))
       .catch(err => reject(err));
   });
