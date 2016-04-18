@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 describe('Sign in', function() {
   it('should create an user on /user/signin/google PUT', function(done) {
-    const idToken = tokens.generateIdToken();
+    const idToken = tokens.generateNewUserToken();
 
     chai.request(app)
       .put('/api/user/signin/google')

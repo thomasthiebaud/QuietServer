@@ -43,8 +43,7 @@ function makeValidPayload(payload) {
   return payload;
 }
 
-function generateIdToken(existingUser) {
-  const payload = makeValidPayload(testTokens[existingUser ? 'existingUser' : 'newUser']);
+function generateIdToken(payload) {
   const envelope = Object.assign({}, testEnvelope);
   const idToken = makeFakeIdToken(payload, envelope);
 
@@ -53,6 +52,29 @@ function generateIdToken(existingUser) {
   return idToken;
 }
 
+function generateNewUserToken() {
+  const payload = makeValidPayload(testTokens.newUser);
+  return generateIdToken(payload);
+}
+
+function generateExistingUserToken() {
+  const payload = makeValidPayload(testTokens.existingUser);
+  return generateIdToken(payload);
+}
+
+function generateInvalidMailToken() {
+  const payload = makeValidPayload(testTokens.invalidEmailUser);
+  return generateIdToken(payload);
+}
+
+function generateCorruptedTokenInfo() {
+  const payload = makeValidPayload(testTokens.corruptedTokenInfo);
+  return generateIdToken(payload);
+}
+
 module.exports = {
-  generateIdToken,
+  generateNewUserToken,
+  generateExistingUserToken,
+  generateInvalidMailToken,
+  generateCorruptedTokenInfo,
 };

@@ -39,7 +39,7 @@ describe('Report a phone as an authenticated user', function() {
   beforeEach(function(done) {
     const newPhone = new Phone({
       'userId': newUser.id,
-      'number': '0123456789',
+      'number': '+33123456789',
       'scam': false,
       'ad': true,
     });
@@ -63,11 +63,11 @@ describe('Report a phone as an authenticated user', function() {
   });
 
   it('should report a phone on /phone PUT', function(done) {
-    const idToken = tokens.generateIdToken(true);
+    const idToken = tokens.generateExistingUserToken();
 
     chai.request(app)
       .put('/api/phone')
-      .send({idToken: idToken, number: '0633878103', ad: true, scam: true})
+      .send({idToken: idToken, number: '+330633878103', ad: true, scam: true})
       .end(function(err, res) {
         expect(res).to.have.status(201);
         expect(res.body.message).to.be.equal('Phone reported');
@@ -76,10 +76,10 @@ describe('Report a phone as an authenticated user', function() {
   });
 
   it('should return a phone on /phone GET', function(done) {
-    const idToken = tokens.generateIdToken(true);
+    const idToken = tokens.generateExistingUserToken();
 
     chai.request(app)
-      .get('/api/phone/0633878103')
+      .get('/api/phone/+330633878103')
       .set('idToken', idToken)
       .end(function(err, res) {
         expect(res).to.have.status(200);
@@ -91,7 +91,7 @@ describe('Report a phone as an authenticated user', function() {
     const idToken = 'Some invalid id token';
 
     chai.request(app)
-      .get('/api/phone/0633878103')
+      .get('/api/phone/+330633878103')
       .set('idToken', idToken)
       .end(function(err, res) {
         expect(res).to.have.status(403);
@@ -104,7 +104,7 @@ describe('Report a phone as an authenticated user', function() {
 
     chai.request(app)
       .put('/api/phone')
-      .send({idToken: idToken, number: '0633878103', ad: true, scam: true})
+      .send({idToken: idToken, number: '+330633878103', ad: true, scam: true})
       .end(function(err, res) {
         expect(res).to.have.status(403);
         done();
