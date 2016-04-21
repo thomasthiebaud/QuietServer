@@ -74,6 +74,22 @@ describe('Phone controller test case', function() {
     });
   });
 
+  it('should not update a phone if it is not signalized as scam or ad', function(done) {
+    phoneController.report({userId: 'dummyToken', phoneNumber: '+33123456789', ad: false, scam: false}).then(res => {
+      expect(res.code).to.be.equal(code.S_REPORTED);
+
+      const content = res.content;
+
+      expect(content.number).to.be.equal('+33123456789');
+      expect(content.scam).to.be.equal(0);
+      expect(content.ad).to.be.equal(1);
+      expect(content.score).to.be.equal(1);
+      done();
+    }).catch(err => {
+      log.error(err);
+    });
+  });
+
   it('should fail to report a phone if the number does not seem to be valid', function(done) {
     phoneController.report({userId: 'dummyToken', phoneNumber: '00000', ad: true, scam: true}).catch(err => {
       expect(err.code).to.be.equal(code.E_DATABASE);

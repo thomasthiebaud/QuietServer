@@ -16,7 +16,7 @@ function getMessage(_code) {
     case code.E_INCORRECT_TOKEN:
       return 'Access denied';
     default:
-      throw new Error(`Unknown status code : ${_code}`);
+      return '';
   }
 }
 
