@@ -13,21 +13,22 @@
     "chai-http": "2.0.1",
     "gulp": "3.9.1",
     "gulp-eslint": "2.0.0",
-    "gulp-istanbul": "^0.10.4",
-    "gulp-mocha": "^2.2.0",
+    "gulp-istanbul": "0.10.4",
+    "gulp-mocha": "2.2.0",
     "mocha": "2.4.5",
-    "request": "2.70.0",
+    "request": "2.72.0",
     "sinon": "1.17.3"
   },
   "dependencies": {
     "app-root-path": "1.0.0",
-    "bluebird": "3.3.4",
+    "bluebird": "3.3.5",
     "body-parser": "1.15.0",
-    "bunyan": "1.8.0",
-    "config": "^1.20.1",
+    "bunyan": "1.8.1",
+    "config": "1.20.1",
     "express": "4.13.4",
+    "express-validator": "2.20.3",
     "google-id-token-verifier": "0.1.2",
-    "mongoose": "4.4.6",
+    "mongoose": "4.4.13",
     "node-uuid": "1.4.7"
   }
 }
