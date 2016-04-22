@@ -2,6 +2,7 @@
 
 const app = require('../../app');
 
+const code = require('../../app/utils/code');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;

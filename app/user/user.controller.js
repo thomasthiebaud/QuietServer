@@ -38,7 +38,7 @@ function checkUserExist(id) {
       }
 
       return resolve({
-        code: code.S_FOUND,
+        code: code.S_USER_FOUND,
         content: user,
       });
     });
@@ -64,7 +64,7 @@ function addUserToDatabase(tokenInfo) {
         });
       } else {
         resolve({
-          code: code.S_CREATED,
+          code: code.S_USER_CREATED,
           content: user,
         });
       }

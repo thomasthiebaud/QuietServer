@@ -45,7 +45,7 @@ describe('User controller', function() {
       const idToken = tokensMock.generateNewUserToken();
 
       userController.signIn(idToken).then(res => {
-        expect(res.code).to.be.equal(code.S_CREATED);
+        expect(res.code).to.be.equal(code.S_USER_CREATED);
 
         const user = res.content;
 
@@ -64,7 +64,7 @@ describe('User controller', function() {
       const idToken = tokensMock.generateExistingUserToken();
 
       userController.signIn(idToken).then(res => {
-        expect(res.code).to.be.equal(code.S_FOUND);
+        expect(res.code).to.be.equal(code.S_USER_FOUND);
 
         const user = res.content;
 
@@ -101,7 +101,7 @@ describe('User controller', function() {
       const idToken = tokensMock.generateExistingUserToken();
 
       userController.signIn(idToken).then(res => {
-        expect(res.code).to.be.equal(code.S_FOUND);
+        expect(res.code).to.be.equal(code.S_USER_FOUND);
 
         const user = res.content;
 

@@ -19,9 +19,9 @@ describe('Response', function() {
       }
     });
 
-    it('should match code S_CREATED', function(done) {
+    it('should match code S_PHONE_REPORTED', function(done) {
       const res = new ResponseMock();
-      response.send(res, code.S_CREATED);
+      response.send(res, code.S_PHONE_REPORTED);
       expect(res.toString()).to.deep.equal({
         status: 201,
         body: {
@@ -31,9 +31,9 @@ describe('Response', function() {
       done();
     });
 
-    it('should match code S_REPORTED', function(done) {
+    it('should match code S_PHONE_CREATED', function(done) {
       const res = new ResponseMock();
-      response.send(res, code.S_REPORTED);
+      response.send(res, code.S_PHONE_CREATED);
       expect(res.toString()).to.deep.equal({
         status: 201,
         body: {
@@ -43,13 +43,37 @@ describe('Response', function() {
       done();
     });
 
-    it('should match code S_FOUND', function(done) {
+    it('should match code S_PHONE_FOUND', function(done) {
       const res = new ResponseMock();
-      response.send(res, code.S_FOUND);
+      response.send(res, code.S_PHONE_FOUND);
       expect(res.toString()).to.deep.equal({
         status: 200,
         body: {
           message: 'Phone found'
+        }
+      });
+      done();
+    });
+
+    it('should match code S_USER_CREATED', function(done) {
+      const res = new ResponseMock();
+      response.send(res, code.S_USER_CREATED);
+      expect(res.toString()).to.deep.equal({
+        status: 201,
+        body: {
+          message: 'User created'
+        }
+      });
+      done();
+    });
+
+    it('should match code S_USER_FOUND', function(done) {
+      const res = new ResponseMock();
+      response.send(res, code.S_USER_FOUND);
+      expect(res.toString()).to.deep.equal({
+        status: 200,
+        body: {
+          message: 'User found'
         }
       });
       done();
@@ -94,7 +118,7 @@ describe('Response', function() {
     it('should match a code with a return content', function(done) {
       const res = new ResponseMock();
       const content = {test: 'Test'};
-      response.send(res, code.S_FOUND, content);
+      response.send(res, code.S_PHONE_FOUND, content);
       expect(res.toString()).to.deep.equal({
         status: 200,
         body: {

@@ -4,11 +4,15 @@ const code = require('../utils/code');
 
 function getMessage(_code) {
   switch (_code) {
-    case code.S_CREATED:
-    case code.S_REPORTED:
+    case code.S_PHONE_CREATED:
+    case code.S_PHONE_REPORTED:
       return 'Phone reported';
-    case code.S_FOUND:
+    case code.S_USER_CREATED:
+      return 'User created';
+    case code.S_PHONE_FOUND:
       return 'Phone found';
+    case code.S_USER_FOUND:
+      return 'User found';
     case code.E_UNKNOWN_USER:
       return 'Unknown user';
     case code.E_DATABASE:
@@ -22,10 +26,12 @@ function getMessage(_code) {
 
 function getHttpStatus(_code) {
   switch (_code) {
-    case code.S_CREATED:
-    case code.S_REPORTED:
+    case code.S_PHONE_CREATED:
+    case code.S_PHONE_REPORTED:
+    case code.S_USER_CREATED:
       return 201;
-    case code.S_FOUND:
+    case code.S_USER_FOUND:
+    case code.S_PHONE_FOUND:
       return 200;
     case code.E_UNKNOWN_USER:
       return 400;

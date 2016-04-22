@@ -32,7 +32,7 @@ function savePhoneToDatabase(_report, _phone) {
         });
       } else {
         resolve({
-          code: code.S_REPORTED,
+          code: code.S_PHONE_REPORTED,
           content: {
             number: phone.number,
             ad: phone.ad,
@@ -54,7 +54,7 @@ function find(_phoneNumber) {
         });
       } else {
         resolve({
-          code: code.S_FOUND,
+          code: code.S_PHONE_FOUND,
           content: phone,
         });
       }

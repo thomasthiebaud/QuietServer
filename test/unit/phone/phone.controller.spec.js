@@ -54,7 +54,7 @@ describe('Phone controller', function() {
   describe('#report', function() {
     it('should create a phone given its number if it does not exist', function(done) {
       phoneController.report({userId: 'dummyToken', phoneNumber: '+339876543210', ad: true, scam: true}).then(res => {
-        expect(res.code).to.be.equal(code.S_REPORTED);
+        expect(res.code).to.be.equal(code.S_PHONE_REPORTED);
 
         const content = res.content;
 
@@ -70,7 +70,7 @@ describe('Phone controller', function() {
 
     it('should update a phone given its number if it exists', function(done) {
       phoneController.report({userId: 'dummyToken', phoneNumber: '+33123456789', ad: true, scam: true}).then(res => {
-        expect(res.code).to.be.equal(code.S_REPORTED);
+        expect(res.code).to.be.equal(code.S_PHONE_REPORTED);
 
         const content = res.content;
 
@@ -86,7 +86,7 @@ describe('Phone controller', function() {
 
     it('should not update a phone if it is not signalized as scam or ad', function(done) {
       phoneController.report({userId: 'dummyToken', phoneNumber: '+33123456789', ad: false, scam: false}).then(res => {
-        expect(res.code).to.be.equal(code.S_REPORTED);
+        expect(res.code).to.be.equal(code.S_PHONE_REPORTED);
 
         const content = res.content;
 
