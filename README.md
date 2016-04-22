@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thomasthiebaud/QuietServer.svg?branch=feature%2Fsetup-travis)](https://travis-ci.org/thomasthiebaud/QuietServer)
+
 # Run mongodb from docker
 
 ```
