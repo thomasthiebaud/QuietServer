@@ -16,12 +16,12 @@ describe('Sign in', function() {
     done();
   });
 
-  describe('/user/signin/google PUT', function() {
+  describe('/user/signin PUT', function() {
     it('should create an user', function(done) {
       const idToken = tokensMock.generateNewUserToken();
 
       chai.request(app)
-        .put('/api/user/signin/google')
+        .put('/api/user/signin')
         .send({idToken: idToken})
         .end(function(err, res) {
           expect(res).to.have.status(201);
@@ -34,7 +34,7 @@ describe('Sign in', function() {
       const idToken = 'Some dummy token';
 
       chai.request(app)
-        .put('/api/user/signin/google')
+        .put('/api/user/signin')
         .send({idToken: idToken})
         .end(function(err, res) {
           expect(res).to.have.status(403);
@@ -45,7 +45,7 @@ describe('Sign in', function() {
 
     it('should fail to create an user if the idToken is empty', function(done) {
       chai.request(app)
-        .put('/api/user/signin/google')
+        .put('/api/user/signin')
         .send({idToken: ''})
         .end(function(err, res) {
           expect(res).to.have.status(400);
