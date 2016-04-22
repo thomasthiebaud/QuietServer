@@ -1,5 +1,3 @@
-'use strict';
-
 const code = require('../../../app/utils/code');
 const chai = require('chai');
 const expect = chai.expect;
@@ -25,8 +23,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 201,
         body: {
-          message: 'Phone reported'
-        }
+          message: 'Phone reported',
+        },
       });
       done();
     });
@@ -37,8 +35,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 201,
         body: {
-          message: 'Phone reported'
-        }
+          message: 'Phone reported',
+        },
       });
       done();
     });
@@ -49,8 +47,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 200,
         body: {
-          message: 'Phone found'
-        }
+          message: 'Phone found',
+        },
       });
       done();
     });
@@ -61,8 +59,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 201,
         body: {
-          message: 'User created'
-        }
+          message: 'User created',
+        },
       });
       done();
     });
@@ -73,8 +71,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 200,
         body: {
-          message: 'User found'
-        }
+          message: 'User found',
+        },
       });
       done();
     });
@@ -85,8 +83,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 400,
         body: {
-          message: 'Unknown user'
-        }
+          message: 'Unknown user',
+        },
       });
       done();
     });
@@ -97,8 +95,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 500,
         body: {
-          message: 'Internal server error'
-        }
+          message: 'Internal server error',
+        },
       });
       done();
     });
@@ -109,8 +107,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 403,
         body: {
-          message: 'Access denied'
-        }
+          message: 'Access denied',
+        },
       });
       done();
     });
@@ -121,8 +119,8 @@ describe('Response', function() {
       expect(res.toString()).to.deep.equal({
         status: 400,
         body: {
-          message: 'Invalid param'
-        }
+          message: 'Invalid param',
+        },
       });
       done();
     });
@@ -136,8 +134,8 @@ describe('Response', function() {
         status: 200,
         body: {
           message: 'Phone found',
-          content: content
-        }
+          content,
+        },
       });
       done();
     });

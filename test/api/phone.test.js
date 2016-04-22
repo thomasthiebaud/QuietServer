@@ -2,7 +2,6 @@
 
 const app = require('../../app');
 
-const code = require('../../app/utils/code')
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
@@ -30,26 +29,28 @@ describe('Report a phone as an authenticated user', function() {
     });
 
     newUser.save(function(err) {
-      if (err)
+      if (err) {
         log.error(err);
-      else
+      } else {
         done();
+      }
     });
   });
 
   beforeEach(function(done) {
     const newPhone = new Phone({
-      'userId': newUser.id,
-      'number': '+33123456789',
-      'scam': false,
-      'ad': true,
+      userId: newUser.id,
+      number: '+33123456789',
+      scam: false,
+      ad: true,
     });
 
     newPhone.save(function(err) {
-      if (err)
+      if (err) {
         log.error(err);
-      else
+      } else {
         done();
+      }
     });
   });
 
@@ -69,7 +70,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'true'})
+        .send({idToken, number: '+330633878103', ad: 'true', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(201);
           expect(res.body.message).to.be.equal('Phone reported');
@@ -82,7 +83,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'true'})
+        .send({idToken, number: '+330633878103', ad: 'true', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(403);
           done();
@@ -105,7 +106,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '', ad: 'true', scam: 'true'})
+        .send({idToken, number: '', ad: 'true', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');
@@ -118,7 +119,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '0123456789', ad: 'true', scam: 'true'})
+        .send({idToken, number: '0123456789', ad: 'true', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');
@@ -131,7 +132,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: '', scam: 'true'})
+        .send({idToken, number: '+330633878103', ad: '', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');
@@ -144,7 +145,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: 'test', scam: 'true'})
+        .send({idToken, number: '+330633878103', ad: 'test', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');
@@ -157,7 +158,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: ''})
+        .send({idToken, number: '+330633878103', ad: 'true', scam: ''})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');
@@ -170,7 +171,7 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'test'})
+        .send({idToken, number: '+330633878103', ad: 'true', scam: 'test'})
         .end(function(err, res) {
           expect(res).to.have.status(400);
           expect(res.body.message).to.be.equal('Invalid param');

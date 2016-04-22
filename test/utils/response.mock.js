@@ -11,7 +11,7 @@ class ResponseMock {
   toString() {
     return {
       status: this.httpCode,
-      body: this.httpMessage
+      body: this.httpMessage,
     };
   }
 }

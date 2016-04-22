@@ -1,5 +1,3 @@
-'use strict';
-
 const chai = require('chai');
 const code = require('../../../app/utils/code');
 const expect = chai.expect;
@@ -18,10 +16,11 @@ describe('Phone controller', function() {
     });
 
     newPhone.save(function(err) {
-      if (err)
+      if (err) {
         log.error(err);
-      else
+      } else {
         done();
+      }
     });
   });
 

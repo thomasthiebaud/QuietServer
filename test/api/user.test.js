@@ -1,5 +1,3 @@
-'use strict';
-
 const app = require('../../app');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -22,10 +20,10 @@ describe('Sign in', function() {
 
       chai.request(app)
         .put('/api/user/signin')
-        .send({idToken: idToken})
+        .send({idToken})
         .end(function(err, res) {
           expect(res).to.have.status(201);
-          expect(res.body.message).to.be.equal('User created')
+          expect(res.body.message).to.be.equal('User created');
           done();
         });
     });
@@ -35,10 +33,10 @@ describe('Sign in', function() {
 
       chai.request(app)
         .put('/api/user/signin')
-        .send({idToken: idToken})
+        .send({idToken})
         .end(function(err, res) {
           expect(res).to.have.status(403);
-          expect(res.body.message).to.be.equal('Access denied')
+          expect(res.body.message).to.be.equal('Access denied');
           done();
         });
     });
@@ -49,7 +47,7 @@ describe('Sign in', function() {
         .send({idToken: ''})
         .end(function(err, res) {
           expect(res).to.have.status(400);
-          expect(res.body.message).to.be.equal('Invalid param')
+          expect(res.body.message).to.be.equal('Invalid param');
           done();
         });
     });

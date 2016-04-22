@@ -3,12 +3,14 @@
     "mocha": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 6
   },
   "rules": {
     no-sync: "warn",
     func-names: "off",
     no-restricted-syntax: "off",
-    prefer-arrow-callback: "off"
+    prefer-arrow-callback: "off",
+    no-unused-expressions: "off",
+    strict: "off"
   }
 }

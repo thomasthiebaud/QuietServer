@@ -1,5 +1,3 @@
-'use strict';
-
 const code = require('../../../app/utils/code');
 const chai = require('chai');
 const expect = chai.expect;
@@ -28,10 +26,11 @@ describe('User controller', function() {
     });
 
     newUser.save(function(err) {
-      if (err)
+      if (err) {
         log.error(err);
-      else
+      } else {
         done();
+      }
     });
   });
 

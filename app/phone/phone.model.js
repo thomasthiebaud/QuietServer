@@ -10,8 +10,8 @@ const PhoneSchema = new Schema({
   number: {
     type: String,
     validate: {
-      validator: function(v) {
-        return checker.isPhone(v);
+      validator(phone) {
+        return checker.isPhone(phone);
       },
       message: '{VALUE} is not a valid phone number!',
     },

@@ -49,11 +49,12 @@ function getHttpStatus(_code) {
 
 function send(res, _code, content) {
   const message = getMessage(_code);
-  const httpMessage = {message: message};
+  const httpMessage = {message};
   const httpStatus = getHttpStatus(_code);
 
-  if (content)
+  if (content) {
     httpMessage.content = content;
+  }
 
   res
     .status(httpStatus)

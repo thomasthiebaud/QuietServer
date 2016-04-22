@@ -9,7 +9,7 @@ gulp.task('lint', () =>
   gulp.src(['**/*.js', '!node_modules/**', '!test/fixtures/**', '!coverage/**'])
     .pipe(eslint({
       rulePaths: ['.'],
-      quiet: true,
+      quiet: false,
     }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())

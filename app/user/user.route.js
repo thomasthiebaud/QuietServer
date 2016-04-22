@@ -11,8 +11,8 @@ router.route('/user/signin').put((req, res) => {
   const schema = {
     idToken: {
       in: 'body',
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   };
 
   checker.check(req, schema)

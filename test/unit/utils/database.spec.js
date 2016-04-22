@@ -3,8 +3,6 @@
 const code = require('../../../app/utils/code');
 const chai = require('chai');
 const expect = chai.expect;
-const log = require('../../../app/utils/logger').log;
-const tokensMock = require('../../utils/tokens.mock');
 
 const database = require('../../../app/utils/database');
 
@@ -21,11 +19,11 @@ describe('Database connection', function() {
 
   it('should success to start the database with a correct env', function(done) {
     database.connect().then(mongooseMessage => {
-      expect(mongooseMessage.code).to.be.equal(code.S_DATABASE_CONNECTED)
+      expect(mongooseMessage.code).to.be.equal(code.S_DATABASE_CONNECTED);
       done();
     });
   });
-  
+
   it('should fail to start the database with an incorrect env', function(done) {
     database.connect('dummy').catch(err => {
       expect(err.code).to.be.equal(code.E_DATABASE);
@@ -39,7 +37,7 @@ describe('Database connection', function() {
       .then(mongooseMessage => {
         expect(mongooseMessage.code).to.be.equal(code.S_DATABASE_CONNECTED);
         firstMongooseInstance = mongooseMessage.content;
-        return database.connect()
+        return database.connect();
       })
       .then(mongooseMessage => {
         expect(mongooseMessage.code).to.be.equal(code.S_DATABASE_CONNECTION_RETRIEVED);

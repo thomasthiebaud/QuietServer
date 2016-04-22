@@ -5,29 +5,33 @@ const config = require('config');
 const log = require('./logger').log;
 const mongoose = require('mongoose');
 
+const Promise = require('bluebird');
+
 function connect(_dbUri) {
   let dbUri;
 
-  if(_dbUri)
+  if (_dbUri) {
     dbUri = _dbUri;
-  else
+  } else {
     dbUri = config.get('mongo.uri');
+  }
 
   return new Promise((resolve, reject) => {
-    if(mongoose.connection.readyState === 1)
-      return resolve({
+    if (mongoose.connection.readyState === 1) {
+      resolve({
         code: code.S_DATABASE_CONNECTION_RETRIEVED,
         content: mongoose,
       });
+    }
 
     mongoose.connect(dbUri, err => {
-      if(err) {
+      if (err) {
         log.error(`Error on database connection : ${err}`);
+
         reject({
           code: code.E_DATABASE,
         });
-      }
-      else {
+      } else {
         log.info('Successfully connected to database');
         resolve({
           code: code.S_DATABASE_CONNECTED,
@@ -35,7 +39,7 @@ function connect(_dbUri) {
         });
       }
     });
-  })
+  });
 }
 
 module.exports = {

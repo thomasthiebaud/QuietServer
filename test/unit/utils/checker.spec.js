@@ -1,5 +1,3 @@
-'use strict';
-
 const checker = require('../../../app/utils/checker');
 const chai = require('chai');
 const expect = chai.expect;

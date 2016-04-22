@@ -12,23 +12,23 @@ router.route('/phone').put((req, res) => {
   const schema = {
     idToken: {
       in: 'body',
-      notEmpty: true
+      notEmpty: true,
     },
     number: {
       in: 'body',
       notEmpty: true,
-      isPhone: true
+      isPhone: true,
     },
     ad: {
       in: 'body',
       notEmpty: true,
-      isBoolean: true
+      isBoolean: true,
     },
     scam: {
       in: 'body',
       notEmpty: true,
-      isBoolean: true
-    }
+      isBoolean: true,
+    },
   };
 
   checker.check(req, schema)
@@ -43,7 +43,7 @@ router.route('/phone/:number').get((req, res) => {
     number: {
       in: 'params',
       notEmpty: true,
-      isPhone: true
+      isPhone: true,
     },
   };
 

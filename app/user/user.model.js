@@ -13,10 +13,10 @@ const UserSchema = new Schema({
   },
   authId: String,
   email: {
-    type:String,
+    type: String,
     validate: {
-      validator: function(v) {
-        return checker.isMail(v);
+      validator(mail) {
+        return checker.isMail(mail);
       },
       message: '{VALUE} is not a valid email!',
     },

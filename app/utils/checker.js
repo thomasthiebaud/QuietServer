@@ -2,6 +2,8 @@
 
 const code = require('../utils/code');
 
+const Promise = require('bluebird');
+
 function check(req, schema) {
   return new Promise((resolve, reject) => {
     req.check(schema);
@@ -10,7 +12,7 @@ function check(req, schema) {
       .catch(err => reject({
         code: code.E_INVALID_PARAM,
         message: `Invalid param : ${err[0].value}`,
-      }))
+      }));
   });
 }
 
