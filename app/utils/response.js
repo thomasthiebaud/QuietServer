@@ -19,6 +19,8 @@ function getMessage(_code) {
       return 'Internal server error';
     case code.E_INCORRECT_TOKEN:
       return 'Access denied';
+    case code.E_INVALID_PARAM:
+      return 'Invalid param';
     default:
       return '';
   }
@@ -33,6 +35,7 @@ function getHttpStatus(_code) {
     case code.S_USER_FOUND:
     case code.S_PHONE_FOUND:
       return 200;
+    case code.E_INVALID_PARAM:
     case code.E_UNKNOWN_USER:
       return 400;
     case code.E_DATABASE:

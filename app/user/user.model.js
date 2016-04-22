@@ -1,5 +1,6 @@
 'use strict';
 
+const checker = require('../utils/checker');
 const mongoose = require('../../app/utils/database').mongoose;
 
 const Schema = mongoose.Schema;
@@ -15,7 +16,7 @@ const UserSchema = new Schema({
     type:String,
     validate: {
       validator: function(v) {
-        return(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/).test(v);
+        return checker.isMail(v);
       },
       message: '{VALUE} is not a valid email!',
     },

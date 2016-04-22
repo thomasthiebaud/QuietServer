@@ -5,6 +5,7 @@ module.exports = {
   E_DATABASE: 101,
   E_UNKNOWN_USER: 102,
   E_INCORRECT_TOKEN: 103,
+  E_INVALID_PARAM: 104,
 
   // Success
   S_PHONE_CREATED: 201,

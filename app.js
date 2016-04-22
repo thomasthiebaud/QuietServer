@@ -1,6 +1,8 @@
 'use strict';
 
+const checker = require('./app/utils/checker');
 const express = require('express');
+const expressValidator = require('express-validator');
 const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8080;
@@ -13,6 +15,16 @@ database.connect().then(mongoose => {
 
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+  app.use(expressValidator({
+    customValidators: {
+      isPhone: function(phone) {
+        return checker.isPhone(phone);
+      },
+      isMail: function(mail) {
+        return checker.isMail(mail);
+      }
+    }
+  }));
 
   app.use('/api', phoneRoutes);
   app.use('/api', userRoutes);

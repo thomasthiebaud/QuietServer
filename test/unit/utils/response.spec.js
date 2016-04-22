@@ -115,6 +115,19 @@ describe('Response', function() {
       done();
     });
 
+    it('should match code E_INVALID_PARAM', function(done) {
+      const res = new ResponseMock();
+      response.send(res, code.E_INVALID_PARAM);
+      expect(res.toString()).to.deep.equal({
+        status: 400,
+        body: {
+          message: 'Invalid param'
+        }
+      });
+      done();
+    });
+
+
     it('should match a code with a return content', function(done) {
       const res = new ResponseMock();
       const content = {test: 'Test'};

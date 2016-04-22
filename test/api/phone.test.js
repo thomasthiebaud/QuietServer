@@ -2,7 +2,7 @@
 
 const app = require('../../app');
 
-const code = require('../../app/utils/code');
+const code = require('../../app/utils/code')
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
@@ -63,52 +63,157 @@ describe('Report a phone as an authenticated user', function() {
     done();
   });
 
-  it('should report a phone on /phone PUT', function(done) {
-    const idToken = tokensMock.generateExistingUserToken();
+  describe('/phone PUT', function() {
+    it('should successfully report a phone with valid params', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
 
-    chai.request(app)
-      .put('/api/phone')
-      .send({idToken: idToken, number: '+330633878103', ad: true, scam: true})
-      .end(function(err, res) {
-        expect(res).to.have.status(201);
-        expect(res.body.message).to.be.equal('Phone reported');
-        done();
-      });
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(201);
+          expect(res.body.message).to.be.equal('Phone reported');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if the idToken is invalid', function(done) {
+      const idToken = 'Some invalid id token';
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(403);
+          done();
+        });
+    });
+
+    it('should fail to report a phone if idToken is empty', function(done) {
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: '', number: '+330633878103', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if the number is empty', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if the number does not match E.164 numbering plan', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '0123456789', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if ad is empty', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: '', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if ad is not a boolean', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: 'test', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if scam is empty', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: ''})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
+
+    it('should fail to report a phone if scam is not a boolean', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken: idToken, number: '+330633878103', ad: 'true', scam: 'test'})
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.be.equal('Invalid param');
+          done();
+        });
+    });
   });
 
-  it('should return a phone on /phone GET', function(done) {
-    const idToken = tokensMock.generateExistingUserToken();
+  describe('/phone GET', function() {
+    it('should return a phone if it exists', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
 
-    chai.request(app)
-      .get('/api/phone/+330633878103')
-      .set('idToken', idToken)
-      .end(function(err, res) {
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
+      chai.request(app)
+        .get('/api/phone/+330633878103')
+        .set('idToken', idToken)
+        .end(function(err, res) {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
 
-  it('should fail to get a phone if idToken is not valid', function(done) {
-    const idToken = 'Some invalid id token';
+    it('should fail to get a phone if idToken is not valid', function(done) {
+      const idToken = 'Some invalid id token';
 
-    chai.request(app)
-      .get('/api/phone/+330633878103')
-      .set('idToken', idToken)
-      .end(function(err, res) {
-        expect(res).to.have.status(403);
-        done();
-      });
-  });
+      chai.request(app)
+        .get('/api/phone/+330633878103')
+        .set('idToken', idToken)
+        .end(function(err, res) {
+          expect(res).to.have.status(403);
+          done();
+        });
+    });
 
-  it('should fail to report a phone on /phone PUT', function(done) {
-    const idToken = 'Some invalid id token';
+    it('should fail to get a phone if the number does not match the E.164 numbering plan', function(done) {
+      const idToken = 'Some invalid id token';
 
-    chai.request(app)
-      .put('/api/phone')
-      .send({idToken: idToken, number: '+330633878103', ad: true, scam: true})
-      .end(function(err, res) {
-        expect(res).to.have.status(403);
-        done();
-      });
+      chai.request(app)
+        .get('/api/phone/0123456789')
+        .set('idToken', idToken)
+        .end(function(err, res) {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
   });
 });
