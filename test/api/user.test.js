@@ -4,13 +4,13 @@ const app = require('../../app');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
-const tokens = require('../utils/tokens');
+const tokensMock = require('../utils/tokens.mock');
 
 chai.use(chaiHttp);
 
 describe('Sign in', function() {
   it('should create an user on /user/signin/google PUT', function(done) {
-    const idToken = tokens.generateNewUserToken();
+    const idToken = tokensMock.generateNewUserToken();
 
     chai.request(app)
       .put('/api/user/signin/google')

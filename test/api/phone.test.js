@@ -6,7 +6,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 const log = require('../../app/utils/logger').log;
-const tokens = require('../utils/tokens');
+const tokensMock = require('../utils/tokens.mock');
 const uuid = require('node-uuid');
 
 const Phone = require('../../app/phone/phone.model');
@@ -63,7 +63,7 @@ describe('Report a phone as an authenticated user', function() {
   });
 
   it('should report a phone on /phone PUT', function(done) {
-    const idToken = tokens.generateExistingUserToken();
+    const idToken = tokensMock.generateExistingUserToken();
 
     chai.request(app)
       .put('/api/phone')
@@ -76,7 +76,7 @@ describe('Report a phone as an authenticated user', function() {
   });
 
   it('should return a phone on /phone GET', function(done) {
-    const idToken = tokens.generateExistingUserToken();
+    const idToken = tokensMock.generateExistingUserToken();
 
     chai.request(app)
       .get('/api/phone/+330633878103')
