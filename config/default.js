@@ -2,6 +2,6 @@
 
 module.exports = {
   mongo: {
-    uri: 'mongodb://localhost:27017/Quiet',
+    uri: `mongodb://${process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost'}:27017/Quiet`,
   },
 };
