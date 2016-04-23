@@ -1,9 +1,15 @@
 'use strict';
 
+const coveralls = require('gulp-coveralls');
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const istanbul = require('gulp-istanbul');
 const mocha = require('gulp-mocha');
+
+gulp.task('coverall', () => {
+  gulp.src('./coverage/**/lcov.info')
+    .pipe(coveralls());
+});
 
 gulp.task('lint', () =>
   gulp.src(['**/*.js', '!node_modules/**', '!test/fixtures/**', '!coverage/**'])

@@ -1,5 +1,6 @@
 # Custom
 .idea
+.coveralls.yml
 
 # Created by https://www.gitignore.io/api/intellij,linux,node,osx,windows,webstorm
 
