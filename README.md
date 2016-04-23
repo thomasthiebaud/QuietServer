@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/thomasthiebaud/QuietServer.svg?branch=feature%2Fsetup-travis)](https://travis-ci.org/thomasthiebaud/QuietServer)
+[![Build Status](https://travis-ci.org/thomasthiebaud/QuietServer.svg?branch=feature%2Fsetup-travis)](https://travis-ci.org/thomasthiebaud/QuietServer) [![Coverage Status](https://coveralls.io/repos/github/thomasthiebaud/QuietServer/badge.svg?branch=feature%2Fsetup-travis)](https://coveralls.io/github/thomasthiebaud/QuietServer?branch=feature%2Fsetup-travis)
 
 # Run mongodb from docker
 
