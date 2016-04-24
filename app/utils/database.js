@@ -1,7 +1,7 @@
 'use strict';
 
 const code = require('../../app/utils/code');
-const config = require('config');
+const config = require('../../config/config');
 const log = require('./logger').log;
 const mongoose = require('mongoose');
 
@@ -13,7 +13,7 @@ function connect(_dbUri) {
   if (_dbUri) {
     dbUri = _dbUri;
   } else {
-    dbUri = config.get('mongo.uri');
+    dbUri = config.mongo.uri;
   }
 
   return new Promise((resolve, reject) => {
