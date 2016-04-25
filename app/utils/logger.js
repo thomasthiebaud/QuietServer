@@ -1,6 +1,7 @@
 'use strict';
 
 const bunyan = require('bunyan');
+const config = require('../../config/config');
 
 const log = bunyan.createLogger({
   name: 'quiet',
@@ -11,22 +12,11 @@ const log = bunyan.createLogger({
     },
     {
       level: 'error',
-      path: '/var/tmp/quiet-error.log',
-    },
-  ],
-});
-
-const auditLog = bunyan.createLogger({
-  name: 'quietaudit',
-  streams: [
-    {
-      level: 'info',
-      path: '/var/tmp/quiet-audit.log',
+      path: config.logs.path,
     },
   ],
 });
 
 module.exports = {
   log,
-  auditLog,
 };

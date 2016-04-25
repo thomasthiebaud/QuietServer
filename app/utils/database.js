@@ -26,7 +26,7 @@ function connect(_dbUri) {
 
     mongoose.connect(dbUri, err => {
       if (err) {
-        log.error(`Error on database connection : ${err}`);
+        log.error(err, 'Error on database connection');
 
         reject({
           code: code.E_DATABASE,

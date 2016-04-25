@@ -1,9 +1,9 @@
 'use strict';
 
 const code = require('../utils/code');
+const log = require('../utils/logger').log;
 
 const Phone = require('./phone.model');
-const Promise = require('bluebird');
 
 function savePhoneToDatabase(_report, _phone) {
   return new Promise((resolve, reject) => {
@@ -27,6 +27,7 @@ function savePhoneToDatabase(_report, _phone) {
 
     phone.save(err => {
       if (err) {
+        log.error(err);
         reject({
           code: code.E_DATABASE,
         });
@@ -49,6 +50,7 @@ function find(_phoneNumber) {
   return new Promise((resolve, reject) => {
     Phone.findOne({number: _phoneNumber}, (err, phone) => {
       if (!_phoneNumber || err) {
+        log.error(err);
         reject({
           code: code.E_DATABASE,
         });

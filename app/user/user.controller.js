@@ -1,16 +1,17 @@
 'use strict';
 
 const code = require('../utils/code');
+const log = require('../utils/logger').log;
 const uuid = require('node-uuid');
 const verifier = require('google-id-token-verifier');
 
-const Promise = require('bluebird');
 const User = require('./user.model');
 
 function verifyGoogleIdToken(idToken) {
   return new Promise((resolve, reject) => {
     verifier.verify(idToken, process.env.GOOGLE_CLIENT_ID, (err, tokenInfo) => {
       if (err) {
+        log.error(err);
         return reject({
           code: code.E_INCORRECT_TOKEN,
         });
@@ -28,6 +29,7 @@ function checkUserExist(id) {
   return new Promise((resolve, reject) => {
     User.findOne({authId: id, authProvider: 'GOO'}, (err, user) => {
       if (!id || err) {
+        log.error(err);
         return reject({
           code: code.E_DATABASE,
         });
@@ -59,6 +61,7 @@ function addUserToDatabase(tokenInfo) {
 
     user.save(err => {
       if (err) {
+        log.error(err);
         reject({
           code: code.E_DATABASE,
         });

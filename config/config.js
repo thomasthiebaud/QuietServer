@@ -9,4 +9,7 @@ module.exports = {
     key: process.env.QUIET_SERVER_KEY || './config/quiet-test-key.pem',
     cert: process.env.QUIET_SERVER_CERT || './config/quiet-test-cert.pem',
   },
+  logs: {
+    path: '/var/tmp/quiet-error.log',
+  },
 };
