@@ -1,12 +1,12 @@
 'use strict';
 
 const checker = require('./app/utils/checker');
+const config = require('./config/config');
 const express = require('express');
 const expressValidator = require('express-validator');
 const app = express();
 const log = require('./app/utils/logger').log;
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 8080;
 
 const database = require('./app/utils/database');
 
@@ -29,7 +29,7 @@ database.connect().then(() => {
 
   app.use('/api', phoneRoutes);
   app.use('/api', userRoutes);
-  app.listen(port);
+  app.listen(config.server.port);
 }).catch(err => {
   log.error(err);
   process.exit(1);
