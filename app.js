@@ -30,6 +30,9 @@ database.connect().then(() => {
   app.use('/api', phoneRoutes);
   app.use('/api', userRoutes);
   app.listen(port);
-}).catch(err => log.error(err));
+}).catch(err => {
+  log.error(err);
+  process.exit(1);
+});
 
 module.exports = app;
