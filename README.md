@@ -1,16 +1,25 @@
 [![Build Status](https://travis-ci.org/thomasthiebaud/QuietServer.svg?branch=master)](https://travis-ci.org/thomasthiebaud/QuietServer) [![Coverage Status](https://coveralls.io/repos/github/thomasthiebaud/QuietServer/badge.svg?branch=master)](https://coveralls.io/github/thomasthiebaud/QuietServer?branch=master) [![Dependencies Status](https://david-dm.org/thomasthiebaud/quietserver.svg)](https://david-dm.org/thomasthiebaud/quietserver.svg)
 
+# Easy setup with docker
 
-# Run mongodb from docker
+Install [docker](https://docs.docker.com/linux/step_one/) and [docker-compose](https://docs.docker.com/compose/install/).
 
-```
-docker build --tag my/repo .
-docker run -p 27017:27017 --name mongo_instance_001 -d my/repo
-```
+Clone the repo using
 
-You can then easily start / stop it using
+    git clone https://github.com/thomasthiebaud/QuietServer.git
 
-```
-docker start mongo_instance_001
-docker stop mongo_instance_001
-```
+Move into the directory
+
+    cd QuietServer
+
+Run the app using
+
+    docker-compose up
+
+You can run the tests using
+
+    docker-compose run server /app/node_modules/mocha/bin/mocha --recursive
+
+# Run from scratch
+
+_Coming soon_

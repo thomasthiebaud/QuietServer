@@ -1,22 +1,23 @@
-# Dockerizing MongoDB: Dockerfile for building MongoDB images
-# Based on ubuntu:latest, installs MongoDB following the instructions from:
-# http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+FROM debian:latest
+MAINTAINER Thomas Thiebaud <thiebaud.tom@gmail.com>
 
-FROM       ubuntu:latest
-MAINTAINER Docker
+RUN apt-get update
+RUN apt-get install -y curl git
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# Installation:
-# Import MongoDB public GPG key AND create a MongoDB list file
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-RUN echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-# Update apt-get sources AND install MongoDB
-RUN apt-get update && apt-get install -y mongodb-org
+COPY . /app
+WORKDIR /app
 
-# Create the MongoDB data directory
-RUN mkdir -p /data/db
+ENV NVM_DIR /usr/local/nvm
+ENV NVM_SYMLINK_CURRENT true
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash \
+    && echo 'source $NVM_DIR/nvm.sh' >> /etc/profile \
+    && /bin/bash -l -c "nvm install;" "nvm use;"
 
-# Expose port #27017 from the container to the host
-EXPOSE 27017
+ENV PATH $NVM_DIR/current/bin:$PATH
+ENV NODE_PATH $NVM_DIR/current/lib/node_modules
 
-# Set /usr/bin/mongod as the dockerized entry-point application
-ENTRYPOINT ["/usr/bin/mongod"]
+RUN npm install
+
+EXPOSE 8080
+CMD ["npm", "start"]

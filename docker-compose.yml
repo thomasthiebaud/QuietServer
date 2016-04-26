@@ -1,0 +1,12 @@
+mongo:
+  image: mongo:latest
+  ports:
+   - "27017:27017"
+server:
+  build: .
+  ports:
+   - "8080:8080"
+  links:
+   - mongo
+  environment:
+   - QUIET_MONGO_URI=mongo
