@@ -10,3 +10,4 @@ server:
    - mongo
   environment:
    - QUIET_MONGO_URI=mongo
+   - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}

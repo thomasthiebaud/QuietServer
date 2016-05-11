@@ -15,6 +15,8 @@ function getMessage(_code) {
       return 'User found';
     case code.E_UNKNOWN_USER:
       return 'Unknown user';
+    case code.E_UNKNOWN_PHONE:
+      return 'Phone not found';
     case code.E_DATABASE:
       return 'Internal server error';
     case code.E_INCORRECT_TOKEN:
@@ -36,8 +38,10 @@ function getHttpStatus(_code) {
     case code.S_PHONE_FOUND:
       return 200;
     case code.E_INVALID_PARAM:
-    case code.E_UNKNOWN_USER:
       return 400;
+    case code.E_UNKNOWN_USER:
+    case code.E_UNKNOWN_PHONE:
+      return 404;
     case code.E_DATABASE:
       return 500;
     case code.E_INCORRECT_TOKEN:

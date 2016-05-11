@@ -50,7 +50,7 @@ router.route('/phone/:number').get((req, res) => {
   checker.check(req, schema)
     .then(() => userController.logIn(req.headers.idtoken))
     .then(() => phoneController.find(req.params.number))
-    .then(phone => response.send(res, phone.code))
+    .then(phone => response.send(res, phone.code, phone.content))
     .catch(err => response.send(res, err.code));
 });
 

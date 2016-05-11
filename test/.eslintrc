@@ -11,6 +11,7 @@
     no-restricted-syntax: "off",
     prefer-arrow-callback: "off",
     no-unused-expressions: "off",
-    strict: "off"
+    strict: "off",
+    no-magic-numbers: "off",
   }
 }

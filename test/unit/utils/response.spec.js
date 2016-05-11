@@ -81,9 +81,21 @@ describe('Response', function() {
       const res = new ResponseMock();
       response.send(res, code.E_UNKNOWN_USER);
       expect(res.toString()).to.deep.equal({
-        status: 400,
+        status: 404,
         body: {
           message: 'Unknown user',
+        },
+      });
+      done();
+    });
+
+    it('should match code E_UNKNOWN_PHONE', function(done) {
+      const res = new ResponseMock();
+      response.send(res, code.E_UNKNOWN_PHONE);
+      expect(res.toString()).to.deep.equal({
+        status: 404,
+        body: {
+          message: 'Phone not found',
         },
       });
       done();
@@ -124,7 +136,6 @@ describe('Response', function() {
       });
       done();
     });
-
 
     it('should match a code with a return content', function(done) {
       const res = new ResponseMock();

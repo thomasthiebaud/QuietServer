@@ -6,6 +6,7 @@ module.exports = {
   E_UNKNOWN_USER: 102,
   E_INCORRECT_TOKEN: 103,
   E_INVALID_PARAM: 104,
+  E_UNKNOWN_PHONE: 105,
 
   // Success
   S_PHONE_CREATED: 201,

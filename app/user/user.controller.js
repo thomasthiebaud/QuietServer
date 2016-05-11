@@ -1,6 +1,7 @@
 'use strict';
 
 const code = require('../utils/code');
+const config = require('../../config/config');
 const log = require('../utils/logger').log;
 const uuid = require('node-uuid');
 const verifier = require('google-id-token-verifier');
@@ -9,7 +10,7 @@ const User = require('./user.model');
 
 function verifyGoogleIdToken(idToken) {
   return new Promise((resolve, reject) => {
-    verifier.verify(idToken, process.env.GOOGLE_CLIENT_ID, (err, tokenInfo) => {
+    verifier.verify(idToken, config.server.auth.googleClientId, (err, tokenInfo) => {
       if (err) {
         log.error(err);
         return reject({

@@ -43,6 +43,7 @@ describe('Report a phone as an authenticated user', function() {
       number: '+33123456789',
       scam: false,
       ad: true,
+      score: 1,
     });
 
     newPhone.save(function(err) {
@@ -185,10 +186,29 @@ describe('Report a phone as an authenticated user', function() {
       const idToken = tokensMock.generateExistingUserToken();
 
       chai.request(app)
-        .get('/api/phone/+330633878103')
+        .get('/api/phone/+33123456789')
         .set('idToken', idToken)
         .end(function(err, res) {
           expect(res).to.have.status(200);
+          expect(res.body.content).to.deep.equal({
+            number: '+33123456789',
+            scam: 0,
+            ad: 1,
+            score: 1,
+          });
+          done();
+        });
+    });
+
+    it('should fail to return a number if it does not exist', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .get('/api/phone/+123123123')
+        .set('idToken', idToken)
+        .end(function(err, res) {
+          expect(res).to.have.status(404);
+          expect(res.body.message).to.be.equal('Phone not found');
           done();
         });
     });

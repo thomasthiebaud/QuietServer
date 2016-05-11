@@ -54,10 +54,20 @@ function find(_phoneNumber) {
         reject({
           code: code.E_DATABASE,
         });
-      } else {
+      } else if (phone) {
         resolve({
           code: code.S_PHONE_FOUND,
-          content: phone,
+          content: {
+            number: phone.number,
+            scam: phone.scam,
+            ad: phone.ad,
+            score: phone.score,
+          },
+        });
+      } else {
+        resolve({
+          code: code.E_UNKNOWN_PHONE,
+          content: null,
         });
       }
     });
