@@ -7,20 +7,15 @@ const Phone = require('./phone.model');
 
 function savePhoneToDatabase(_report, _phone) {
   return new Promise((resolve, reject) => {
-    const phone = new Phone();
+    let phone;
+    if (_phone === null) {
+      phone = new Phone();
+    } else {
+      phone = _phone;
+    }
 
     phone.userId = _report.userId;
     phone.number = _report.phoneNumber;
-    if (_phone === null) {
-      phone.ad = 0;
-      phone.scam = 0;
-      phone.score = 0;
-    } else {
-      phone.ad = _phone.ad;
-      phone.scam = _phone.scam;
-      phone.score = _phone.score;
-    }
-
     phone.ad += _report.ad ? 1 : 0;
     phone.scam += _report.scam ? 1 : 0;
     phone.score = phone.ad + phone.scam;
@@ -46,7 +41,7 @@ function savePhoneToDatabase(_report, _phone) {
   });
 }
 
-function find(_phoneNumber) {
+function find(_phoneNumber, isReport) {
   return new Promise((resolve, reject) => {
     Phone.findOne({number: _phoneNumber}, (err, phone) => {
       if (!_phoneNumber || err) {
@@ -55,15 +50,22 @@ function find(_phoneNumber) {
           code: code.E_DATABASE,
         });
       } else if (phone) {
-        resolve({
-          code: code.S_PHONE_FOUND,
-          content: {
-            number: phone.number,
-            scam: phone.scam,
-            ad: phone.ad,
-            score: phone.score,
-          },
-        });
+        if (isReport) {
+          resolve({
+            code: code.S_PHONE_FOUND,
+            content: phone,
+          });
+        } else {
+          resolve({
+            code: code.S_PHONE_FOUND,
+            content: {
+              number: phone.number,
+              scam: phone.scam,
+              ad: phone.ad,
+              score: phone.score,
+            },
+          });
+        }
       } else {
         resolve({
           code: code.E_UNKNOWN_PHONE,
@@ -76,7 +78,7 @@ function find(_phoneNumber) {
 
 function report(_report) {
   return new Promise((resolve, reject) => {
-    find(_report.phoneNumber)
+    find(_report.phoneNumber, true)
       .then(phoneMessage => savePhoneToDatabase(_report, phoneMessage.content))
       .then(phoneMessage => resolve(phoneMessage))
       .catch(err => reject(err));

@@ -71,11 +71,36 @@ describe('Report a phone as an authenticated user', function() {
 
       chai.request(app)
         .put('/api/phone')
-        .send({idToken, number: '+330633878103', ad: 'true', scam: 'true'})
+        .send({idToken, number: '+33123456789', ad: 'true', scam: 'true'})
         .end(function(err, res) {
           expect(res).to.have.status(201);
           expect(res.body.message).to.be.equal('Phone reported');
           done();
+        });
+    });
+
+    it('should successfully update a phone if it is already reported', function(done) {
+      const idToken = tokensMock.generateExistingUserToken();
+
+      chai.request(app)
+        .put('/api/phone')
+        .send({idToken, number: '+33123456789', ad: 'true', scam: 'true'})
+        .end(function(err, res) {
+          expect(res).to.have.status(201);
+          expect(res.body.message).to.be.equal('Phone reported');
+          chai.request(app)
+            .get('/api/phone/+33123456789')
+            .set('idToken', idToken)
+            .end(function(err, res) {
+              expect(res).to.have.status(200);
+              expect(res.body.content).to.deep.equal({
+                number: '+33123456789',
+                scam: 1,
+                ad: 2,
+                score: 3,
+              });
+              done();
+            });
         });
     });
 

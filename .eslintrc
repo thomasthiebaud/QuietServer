@@ -109,7 +109,7 @@
     no-delete-var: "error",
     no-label-var: "error",
     no-restricted-globals: ["error", "event"],
-    no-shadow: ["error", { "allow": ["done","err"] }],
+    no-shadow: ["error", { "allow": ["done","err", "res"] }],
     no-shadow-restricted-names: "error",
     no-undef: "error",
     no-undef-init: "error",
